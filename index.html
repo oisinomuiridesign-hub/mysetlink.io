@@ -4,326 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Setlink Profile</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styling/style.css">
 </head>
-<body>
-    <main class="page">
-        <section class="card" aria-label="Profile card">
-            <img class="avatar" src="400_New black Oisin Murray - The Old Hairdresser's - Fennell Records - 23_12_22 - Sean Bruce Monteith-06-min 1.png" alt="Profile picture">
-            <h1 class="name">Oisin OMuiri</h1>
-            <p class="tagline">Professional musician of 10 years. Getting people to sing and dance!</p>
-        <div class="cta-list" aria-label="Call to action buttons">
-            <button class="cta tip-trigger" type="button">Tip</button>
-            <a class="cta secondary" href="https://g.page/r/CZ7tJcVOO9vbEAE/review" target="_blank" rel="noopener noreferrer" role="button">Review</a>
+<body class="landing">
+    <header class="nav">
+        <div class="nav-left">
+            <div class="brand">Setlink</div>
+            <nav>
+                <a href="#">Features</a>
+                <a href="#">Pricing</a>
+                <a href="#">Docs</a>
+            </nav>
         </div>
-        <section class="songs" aria-label="Song search and list">
-            <form class="search" role="search">
-                <label class="search-label" for="song-search">Make a request</label>
-                <div class="search-bar">
-                    <svg aria-hidden="true" viewBox="0 0 24 24">
-                        <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 5L20.49 19l-5-5zM10 14a4 4 0 110-8 4 4 0 010 8z" fill="black"></path>
-                    </svg>
-                    <input id="song-search" type="search" name="q" placeholder="What do you want to hear?" autocomplete="off">
-                </div>
-            </form>
-            <div class="song-list" role="list" aria-live="polite">
-                <div class="song-item" role="listitem" data-text="brown eyed girl van morrison rock">
-                    <div class="song-meta">
-                        <p class="song-title">Brown Eyed Girl</p>
-                        <div class="song-subline">
-                            <span class="song-artist">Van Morrison</span>
-                            <span class="song-dot" aria-hidden="true"></span>
-                            <span class="song-genre">Rock</span>
-                        </div>
-                    </div>
-                    <div class="song-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M3 20l18-8-18-8 4 8-4 8z" fill="#D8B200"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="song-item" role="listitem" data-text="bohemian rhapsody queen rock">
-                    <div class="song-meta">
-                        <p class="song-title">Bohemian Rhapsody</p>
-                        <div class="song-subline">
-                            <span class="song-artist">Queen</span>
-                            <span class="song-dot" aria-hidden="true"></span>
-                            <span class="song-genre">Rock</span>
-                        </div>
-                    </div>
-                    <div class="song-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M3 20l18-8-18-8 4 8-4 8z" fill="#D8B200"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="song-item" role="listitem" data-text="imagine john lennon pop">
-                    <div class="song-meta">
-                        <p class="song-title">Imagine</p>
-                        <div class="song-subline">
-                            <span class="song-artist">John Lennon</span>
-                            <span class="song-dot" aria-hidden="true"></span>
-                            <span class="song-genre">Pop</span>
-                        </div>
-                    </div>
-                    <div class="song-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M3 20l18-8-18-8 4 8-4 8z" fill="#D8B200"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="song-item" role="listitem" data-text="billie jean michael jackson pop">
-                    <div class="song-meta">
-                        <p class="song-title">Billie Jean</p>
-                        <div class="song-subline">
-                            <span class="song-artist">Michael Jackson</span>
-                            <span class="song-dot" aria-hidden="true"></span>
-                            <span class="song-genre">Pop</span>
-                        </div>
-                    </div>
-                    <div class="song-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M3 20l18-8-18-8 4 8-4 8z" fill="#D8B200"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="song-item" role="listitem" data-text="what a wonderful world louis armstrong jazz">
-                    <div class="song-meta">
-                        <p class="song-title">What a Wonderful World</p>
-                        <div class="song-subline">
-                            <span class="song-artist">Louis Armstrong</span>
-                            <span class="song-dot" aria-hidden="true"></span>
-                            <span class="song-genre">Jazz</span>
-                        </div>
-                    </div>
-                    <div class="song-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M3 20l18-8-18-8 4 8-4 8z" fill="#D8B200"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="song-item" role="listitem" data-text="hotel california eagles rock">
-                    <div class="song-meta">
-                        <p class="song-title">Hotel California</p>
-                        <div class="song-subline">
-                            <span class="song-artist">Eagles</span>
-                            <span class="song-dot" aria-hidden="true"></span>
-                            <span class="song-genre">Rock</span>
-                        </div>
-                    </div>
-                    <div class="song-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M3 20l18-8-18-8 4 8-4 8z" fill="#D8B200"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="song-item" role="listitem" data-text="hallelujah leonard cohen folk">
-                    <div class="song-meta">
-                        <p class="song-title">Hallelujah</p>
-                        <div class="song-subline">
-                            <span class="song-artist">Leonard Cohen</span>
-                            <span class="song-dot" aria-hidden="true"></span>
-                            <span class="song-genre">Folk</span>
-                        </div>
-                    </div>
-                    <div class="song-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M3 20l18-8-18-8 4 8-4 8z" fill="#D8B200"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="song-item" role="listitem" data-text="shape of you ed sheeran pop">
-                    <div class="song-meta">
-                        <p class="song-title">Shape of You</p>
-                        <div class="song-subline">
-                            <span class="song-artist">Ed Sheeran</span>
-                            <span class="song-dot" aria-hidden="true"></span>
-                            <span class="song-genre">Pop</span>
-                        </div>
-                    </div>
-                    <div class="song-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M3 20l18-8-18-8 4 8-4 8z" fill="#D8B200"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="song-item" role="listitem" data-text="smells like teen spirit nirvana rock">
-                    <div class="song-meta">
-                        <p class="song-title">Smells Like Teen Spirit</p>
-                        <div class="song-subline">
-                            <span class="song-artist">Nirvana</span>
-                            <span class="song-dot" aria-hidden="true"></span>
-                            <span class="song-genre">Rock</span>
-                        </div>
-                    </div>
-                    <div class="song-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M3 20l18-8-18-8 4 8-4 8z" fill="#D8B200"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="song-item" role="listitem" data-text="hey ya outkast hip hop">
-                    <div class="song-meta">
-                        <p class="song-title">Hey Ya!</p>
-                        <div class="song-subline">
-                            <span class="song-artist">OutKast</span>
-                            <span class="song-dot" aria-hidden="true"></span>
-                            <span class="song-genre">Hip-Hop</span>
-                        </div>
-                    </div>
-                    <div class="song-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M3 20l18-8-18-8 4 8-4 8z" fill="#D8B200"></path>
-                        </svg>
-                    </div>
-                </div>
-                <p class="empty" aria-live="polite">No songs match your search.</p>
+        <div class="nav-actions">
+            <a class="nav-pill ghost" href="#">Contact</a>
+            <a class="nav-pill" href="#">Dashboard</a>
+        </div>
+    </header>
+
+    <main class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-inner">
+            <p class="badge">Live • Artists and audiences in sync</p>
+            <h1>Share one link for tips, requests, and setlists.</h1>
+            <p class="hero-sub">Setlink gives musicians a live-ready page for requests, tipping, and showcasing your songs—all in one place.</p>
+            <div class="hero-ctas">
+                <button class="cta primary">Start Deploying</button>
+                <button class="cta secondary">Get a Demo</button>
             </div>
-        </section>
-        </section>
+            <div class="tester hero-tester">
+                <label for="user-select">Quick test: jump to a user</label>
+                <select id="user-select">
+                    <option value="">Select a user…</option>
+                    <option value="oisin/mysetlink.html">Oisin</option>
+                    <option value="emma/mysetlink.html">Emma</option>
+                    <option value="liam/mysetlink.html">Liam</option>
+                    <option value="sofia/mysetlink.html">Sofia</option>
+                </select>
+            </div>
+        </div>
     </main>
-    <div class="modal-overlay" data-modal>
-        <div class="modal">
-            <div class="modal-header">
-                <h2>Send a tip</h2>
-                <button class="modal-close" type="button" aria-label="Close tip modal">&times;</button>
-            </div>
-            <p class="modal-body">Choose an amount, then slide to confirm. You’ll be taken to Stripe to complete payment.</p>
-            <div class="amount-options" role="group" aria-label="Tip amount">
-                <button type="button" class="amount active" data-amount="2">€2</button>
-                <button type="button" class="amount" data-amount="5">€5</button>
-                <button type="button" class="amount" data-amount="10">€10</button>
-            </div>
-            <div class="slider" role="button" aria-label="Slide right to confirm tip" tabindex="0">
-                <div class="slider-track">
-                    <div class="slider-thumb" data-thumb>
-                        <span class="slider-arrow">&#xBB;</span>
-                    </div>
-                    <span class="slider-hint">Slide to tip</span>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    <section class="footer-note">
+        <p>Build your Setlink, share it with fans, and stay in the moment.</p>
+    </section>
     <script>
-        const searchInput = document.getElementById('song-search');
-        const songItems = Array.from(document.querySelectorAll('.song-item'));
-        const list = document.querySelector('.song-list');
-        const emptyMsg = list?.querySelector('.empty');
-        const tipTrigger = document.querySelector('.tip-trigger');
-        const modal = document.querySelector('[data-modal]');
-        const closeModalBtn = document.querySelector('.modal-close');
-        const slider = document.querySelector('.slider');
-        const thumb = document.querySelector('[data-thumb]');
-        const stripeUrl = 'https://buy.stripe.com/eVa5l11vq9nNaXu4gg';
-        const amountButtons = Array.from(document.querySelectorAll('[data-amount]'));
-        let selectedAmount = '2';
-
-        function filterSongs() {
-            const query = (searchInput?.value || '').trim().toLowerCase();
-            let visibleCount = 0;
-            songItems.forEach(item => {
-                const text = item.dataset.text || '';
-                const isMatch = text.includes(query);
-                item.style.display = isMatch ? 'flex' : 'none';
-                if (isMatch) visibleCount += 1;
-            });
-            if (!emptyMsg) return;
-            if (visibleCount === 0) {
-                emptyMsg.style.display = 'block';
-                list?.classList.add('no-results');
-            } else {
-                emptyMsg.style.display = 'none';
-                list?.classList.remove('no-results');
-            }
-        }
-
-        searchInput?.addEventListener('input', filterSongs);
-
-        function setAmount(amount) {
-            selectedAmount = amount;
-            amountButtons.forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.amount === amount);
-            });
-        }
-
-        amountButtons.forEach(btn => {
-            btn.addEventListener('click', () => setAmount(btn.dataset.amount || '2'));
-        });
-
-        function openModal() {
-            modal?.classList.add('open');
-        }
-
-        function closeModal() {
-            modal?.classList.remove('open');
-            resetSlider();
-        }
-
-        function resetSlider() {
-            if (!thumb) return;
-            thumb.style.transform = 'translateX(0)';
-            slider?.classList.remove('confirmed');
-        }
-
-        function confirmTip() {
-            slider?.classList.add('confirmed');
-            window.open(stripeUrl, '_blank', 'noopener,noreferrer');
-            setTimeout(closeModal, 300);
-        }
-
-        function handleDrag() {
-            if (!slider || !thumb) return;
-            const track = slider.querySelector('.slider-track');
-            let dragging = false;
-            let startX = 0;
-            let maxX = 0;
-
-            const onPointerDown = (e) => {
-                dragging = true;
-                startX = e.clientX || (e.touches && e.touches[0].clientX);
-                const rect = track.getBoundingClientRect();
-                maxX = rect.width - thumb.offsetWidth - 8;
-                e.preventDefault();
-            };
-
-            const onPointerMove = (e) => {
-                if (!dragging) return;
-                const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-                const delta = clientX - startX;
-                const clamped = Math.max(0, Math.min(delta, maxX));
-                thumb.style.transform = `translateX(${clamped}px)`;
-                if (clamped >= maxX) {
-                    dragging = false;
-                    confirmTip();
-                }
-            };
-
-            const onPointerUp = () => {
-                if (!dragging) return;
-                dragging = false;
-                thumb.style.transform = 'translateX(0)';
-            };
-
-            thumb.addEventListener('mousedown', onPointerDown);
-            thumb.addEventListener('touchstart', onPointerDown, { passive: true });
-            window.addEventListener('mousemove', onPointerMove);
-            window.addEventListener('touchmove', onPointerMove, { passive: true });
-            window.addEventListener('mouseup', onPointerUp);
-            window.addEventListener('touchend', onPointerUp);
-        }
-
-        tipTrigger?.addEventListener('click', openModal);
-        closeModalBtn?.addEventListener('click', closeModal);
-        modal?.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-        });
-        slider?.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                confirmTip();
+        const userSelect = document.getElementById('user-select');
+        userSelect?.addEventListener('change', (e) => {
+            const target = e.target;
+            const value = target?.value;
+            if (value) {
+                window.location.href = value;
             }
         });
-        handleDrag();
     </script>
 </body>
 </html>
