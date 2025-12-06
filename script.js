@@ -2,8 +2,10 @@ const searchInput = document.getElementById('song-search');
 const songItems = Array.from(document.querySelectorAll('.song-item'));
 const list = document.querySelector('.song-list');
 const emptyMsg = list?.querySelector('.empty');
-const tipTrigger = document.querySelector('.tip-trigger');
+const tipTriggers = Array.from(document.querySelectorAll('.tip-trigger'));
 const tipPanel = document.querySelector('.tip-panel');
+const reviewTriggers = Array.from(document.querySelectorAll('.review-trigger'));
+const reviewPanel = document.querySelector('.review-panel');
 const tipForm = document.querySelector('#tip-form');
 const tipAmountInput = document.querySelector('#tip-amount');
 const tipSubmit = document.querySelector('#tip-submit');
@@ -14,16 +16,14 @@ const closeModalBtn = document.querySelector('.modal-close');
 const slider = document.querySelector('.slider');
 const thumb = document.querySelector('[data-thumb]');
 const sliderHint = document.querySelector('.slider-hint');
-const stripeUrl = 'https://buy.stripe.com/eVa5l11vq9nNaXu4gg';
-const STRIPE_PUBLISHABLE_KEY = 'pk_live_51SXnCzGwETsTZkEIOYFMIay6bz4vdFdH9euTdfZFdqxXeEzyqXIn3Zclgbh8eAOlLqBG6zfDd58ACeENMG95baog0053kUvjuf';
-const CREATE_PAYMENT_INTENT_URL = '/api/create-payment-intent';
-let stripe;
-let tipElements;
-let tipElementInitialized = false;
+const stripeUrl = 'https://buy.stripe.com/7sY8wPfAY67R9XB5icgfu00';
+// Stripe Elements not used for sliding flow; kept for future server integration.
 const requestModal = document.querySelector('[data-request-modal]');
 const requestTitle = document.querySelector('.request-song-title');
 const requestCancel = document.querySelector('.request-cancel');
 const requestSend = document.querySelector('.request-send');
+const requestSheet = document.querySelector('.request-sheet');
+const requestGrabber = document.querySelector('.request-grabber');
 const songArrows = Array.from(document.querySelectorAll('.song-arrow'));
 
 function filterSongs() {
@@ -49,9 +49,31 @@ searchInput?.addEventListener('input', filterSongs);
 
 function toggleTipPanel() {
     if (!tipPanel) return;
-    tipPanel.classList.toggle('open');
-    if (tipPanel.classList.contains('open')) {
-        initTipStripe();
+    const willOpen = !tipPanel.classList.contains('open');
+    if (willOpen) {
+        tipPanel.classList.add('open');
+        reviewPanel?.classList.remove('open');
+        tipPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+        tipPanel.classList.remove('open');
+    }
+}
+
+function openTipPanel() {
+    if (!tipPanel) return;
+    tipPanel.classList.add('open');
+    reviewPanel?.classList.remove('open');
+}
+
+function toggleReviewPanel() {
+    if (!reviewPanel) return;
+    const willOpen = !reviewPanel.classList.contains('open');
+    if (willOpen) {
+        reviewPanel.classList.add('open');
+        tipPanel?.classList.remove('open');
+        reviewPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+        reviewPanel.classList.remove('open');
     }
 }
 
@@ -125,7 +147,8 @@ function handleDrag() {
     window.addEventListener('touchend', onPointerUp);
 }
 
-tipTrigger?.addEventListener('click', toggleTipPanel);
+tipTriggers.forEach(btn => btn.addEventListener('click', toggleTipPanel));
+reviewTriggers.forEach(btn => btn.addEventListener('click', toggleReviewPanel));
 closeModalBtn?.addEventListener('click', closeModal);
 modal?.addEventListener('click', (e) => {
     if (e.target === modal) closeModal();
@@ -147,10 +170,12 @@ function openRequestModal(title, artist) {
         artistEl.textContent = artist || 'Artist';
     }
     requestModal?.classList.add('open');
+    if (requestSheet) requestSheet.style.transform = '';
 }
 
 function closeRequestModal() {
     requestModal?.classList.remove('open');
+    if (requestSheet) requestSheet.style.transform = '';
 }
 
 songArrows.forEach(arrow => {
@@ -192,9 +217,9 @@ requestModal?.addEventListener('click', (e) => {
     if (e.target === requestModal) closeRequestModal();
 });
 requestSend?.addEventListener('click', () => {
-    // Placeholder: integrate your request submission here.
+    // Placeholder: integrate your request submission here if needed.
     closeRequestModal();
-    alert('Request sent!');
+    openTipPanel();
 });
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -206,88 +231,43 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Stripe tip integration (frontend only; requires backend for PaymentIntent)
-async function initTipStripe() {
-    if (tipElementInitialized) return;
-    if (!tipElementMount || !tipForm) return;
-    if (!window.Stripe) {
-        const script = document.createElement('script');
-        script.src = 'https://js.stripe.com/v3/';
-        script.onload = () => initTipStripe();
-        document.head.appendChild(script);
-        return;
-    }
-    if (STRIPE_PUBLISHABLE_KEY.includes('replace')) {
-        tipStatus && (tipStatus.textContent = 'Add your Stripe publishable key to enable tipping.');
-        return;
-    }
-    try {
-        stripe = window.Stripe(STRIPE_PUBLISHABLE_KEY);
-        const clientSecret = await createPaymentIntent(getAmountCents());
-        if (!clientSecret) {
-            tipStatus && (tipStatus.textContent = 'Unable to start tip payment.');
-            return;
+// Drag-to-close for request sheet
+if (requestGrabber && requestSheet && requestModal) {
+    let dragging = false;
+    let startY = 0;
+    let currentY = 0;
+    const threshold = 100;
+
+    const onStart = (clientY) => {
+        dragging = true;
+        startY = clientY;
+        currentY = 0;
+        requestSheet.classList.add('dragging');
+    };
+
+    const onMove = (clientY) => {
+        if (!dragging) return;
+        currentY = Math.max(0, clientY - startY);
+        requestSheet.style.transform = `translateY(${currentY}px)`;
+    };
+
+    const onEnd = () => {
+        if (!dragging) return;
+        dragging = false;
+        requestSheet.classList.remove('dragging');
+        if (currentY > threshold) {
+            closeRequestModal();
+        } else {
+            requestSheet.style.transform = 'translateY(0)';
         }
-        tipElements = stripe.elements({ clientSecret });
-        const paymentElement = tipElements.create('payment');
-        paymentElement.mount(tipElementMount);
-        tipElementInitialized = true;
-        tipStatus && (tipStatus.textContent = '');
-    } catch (err) {
-        tipStatus && (tipStatus.textContent = 'Error loading Stripe. Check console.');
-        // eslint-disable-next-line no-console
-        console.error(err);
-    }
+    };
+
+    requestGrabber.addEventListener('mousedown', (e) => onStart(e.clientY));
+    requestGrabber.addEventListener('touchstart', (e) => onStart(e.touches[0].clientY), { passive: true });
+    window.addEventListener('mousemove', (e) => onMove(e.clientY));
+    window.addEventListener('touchmove', (e) => onMove(e.touches[0].clientY), { passive: true });
+    window.addEventListener('mouseup', onEnd);
+    window.addEventListener('touchend', onEnd);
 }
 
-function getAmountCents() {
-    const val = parseFloat(tipAmountInput?.value || '5');
-    const amount = Math.max(1, Math.round(val * 100));
-    return amount;
-}
-
-async function createPaymentIntent(amount) {
-    try {
-        const res = await fetch(CREATE_PAYMENT_INTENT_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ amount }),
-        });
-        if (!res.ok) return null;
-        const data = await res.json();
-        return data.clientSecret;
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
-        return null;
-    }
-}
-
-tipForm?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (!stripe || !tipElements) {
-        tipStatus && (tipStatus.textContent = 'Stripe not ready.');
-        return;
-    }
-    tipSubmit && (tipSubmit.disabled = true);
-    tipStatus && (tipStatus.textContent = 'Processing...');
-    const clientSecret = await createPaymentIntent(getAmountCents());
-    if (!clientSecret) {
-        tipStatus && (tipStatus.textContent = 'Could not create payment.');
-        tipSubmit && (tipSubmit.disabled = false);
-        return;
-    }
-    const elements = stripe.elements({ clientSecret });
-    const paymentElement = elements.create('payment');
-    paymentElement.mount(tipElementMount);
-    const { error } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-            return_url: window.location.href,
-        },
-    });
-    if (error) {
-        tipStatus && (tipStatus.textContent = error.message || 'Payment failed.');
-        tipSubmit && (tipSubmit.disabled = false);
-    }
-});
+// Stripe Elements checkout flow removed in favor of sliding to open Stripe link.
