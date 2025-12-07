@@ -25,6 +25,8 @@ const requestCancel = document.querySelector('.request-cancel');
 const requestSend = document.querySelector('.request-send');
 const songArrows = Array.from(document.querySelectorAll('.song-arrow'));
 const scanButton = document.getElementById('scan-random');
+const userDropdown = document.getElementById('user-dropdown');
+const userToggle = document.getElementById('user-search-toggle');
 
 function filterSongs() {
     const query = (searchInput?.value || '').trim().toLowerCase();
@@ -321,13 +323,23 @@ if (scanButton) {
 
 // Nav user dropdown
 if (userToggle && userDropdown) {
+    const hideDropdown = () => {
+        userDropdown.classList.remove('open');
+        userToggle.classList.remove('open');
+        setTimeout(() => userDropdown.setAttribute('hidden', 'hidden'), 180);
+    };
+
     userToggle.addEventListener('click', (e) => {
         e.stopPropagation();
         const isHidden = userDropdown.hasAttribute('hidden');
         if (isHidden) {
             userDropdown.removeAttribute('hidden');
+            requestAnimationFrame(() => {
+                userDropdown.classList.add('open');
+                userToggle.classList.add('open');
+            });
         } else {
-            userDropdown.setAttribute('hidden', 'hidden');
+            hideDropdown();
         }
     });
 
@@ -335,6 +347,7 @@ if (userToggle && userDropdown) {
         btn.addEventListener('click', (ev) => {
             ev.stopPropagation();
             const url = btn.getAttribute('data-url');
+            hideDropdown();
             if (url) window.location.href = url;
         });
     });
@@ -342,8 +355,6 @@ if (userToggle && userDropdown) {
     document.addEventListener('click', (e) => {
         const target = e.target;
         if (target instanceof Element && (userDropdown.contains(target) || userToggle.contains(target))) return;
-        userDropdown.setAttribute('hidden', 'hidden');
+        if (!userDropdown.hasAttribute('hidden')) hideDropdown();
     });
 }
-const userDropdown = document.getElementById('user-dropdown');
-const userToggle = document.getElementById('user-search-toggle');

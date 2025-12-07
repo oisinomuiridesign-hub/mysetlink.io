@@ -23,6 +23,20 @@ h1 {
     align-items: center;
     justify-content: center;
     padding: 48px 16px;
+    position: relative;
+}
+
+.page-logo {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    opacity: 0.5;
+}
+
+.page-logo img {
+    height: 32px;
+    width: auto;
+    display: block;
 }
 
 .card {
@@ -761,20 +775,24 @@ h1 {
 }
 
 .hero-logo {
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: 0.4px;
-    color: #d8b200;
     margin: 4px 0 80px;
     text-decoration: none;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
 }
 
 .hero-logo.small {
-    font-size: 18px;
-    transform: scale(0.6);
-    transform-origin: left center;
     margin: 0;
+}
+
+.hero-logo img {
+    height: 32px;
+    opacity: 0.5;
+    display: block;
+}
+
+.hero-logo.small img {
+    height: 24px;
 }
 
 .top-nav {
@@ -802,11 +820,17 @@ h1 {
     display: grid;
     place-items: center;
     cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease;
 }
 
 .nav-icon svg {
     width: 20px;
     height: 20px;
+}
+
+.nav-icon.open {
+    background: #3a3633;
+    border-color: #3a3633;
 }
 
 .user-dropdown {
@@ -822,6 +846,20 @@ h1 {
     min-width: 180px;
     box-shadow: 0 14px 36px rgba(0, 0, 0, 0.4);
     z-index: 20;
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity 160ms ease, transform 180ms ease;
+}
+
+.user-dropdown[hidden] {
+    display: grid;
+}
+
+.user-dropdown.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .user-item {
