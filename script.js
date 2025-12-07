@@ -2,6 +2,7 @@ const searchInput = document.getElementById('song-search');
 const songItems = Array.from(document.querySelectorAll('.song-item'));
 const list = document.querySelector('.song-list');
 const emptyMsg = list?.querySelector('.empty');
+const songsContainer = document.querySelector('.songs');
 const tipTriggers = Array.from(document.querySelectorAll('.tip-trigger'));
 const tipPanel = document.querySelector('.tip-panel');
 const reviewTriggers = Array.from(document.querySelectorAll('.review-trigger'));
@@ -22,8 +23,6 @@ const requestModal = document.querySelector('[data-request-modal]');
 const requestTitle = document.querySelector('.request-song-title');
 const requestCancel = document.querySelector('.request-cancel');
 const requestSend = document.querySelector('.request-send');
-const requestSheet = document.querySelector('.request-sheet');
-const requestGrabber = document.querySelector('.request-grabber');
 const songArrows = Array.from(document.querySelectorAll('.song-arrow'));
 
 function filterSongs() {
@@ -161,113 +160,137 @@ slider?.addEventListener('keydown', (e) => {
 });
 handleDrag();
 
-function openRequestModal(title, artist) {
-    if (requestTitle) {
-        requestTitle.textContent = title || 'this song';
-    }
-    const artistEl = document.querySelector('.request-song-artist');
-    if (artistEl) {
-        artistEl.textContent = artist || 'Artist';
-    }
-    requestModal?.classList.add('open');
-    if (requestSheet) requestSheet.style.transform = '';
+let openRequestItem = null;
+
+function buildInlineRequest(item, title, artist) {
+    const existing = item.querySelector('.song-request-panel');
+    if (existing) return existing;
+    const panel = document.createElement('div');
+    panel.className = 'song-request-panel';
+    const textarea = document.createElement('textarea');
+    textarea.className = 'request-message';
+    textarea.placeholder = 'Add a message to your request.';
+    textarea.rows = 3;
+    textarea.maxLength = 50;
+    const send = document.createElement('button');
+    send.type = 'button';
+    send.className = 'song-send';
+    send.append('Send request');
+    const arrowIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    arrowIcon.setAttribute('class', 'btn-arrow');
+    arrowIcon.setAttribute('viewBox', '0 0 24 24');
+    const arrowPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    arrowPath.setAttribute('d', defaultArrowPath);
+    arrowPath.setAttribute('fill', '#D8B200');
+    arrowIcon.appendChild(arrowPath);
+    send.appendChild(arrowIcon);
+    panel.addEventListener('click', (ev) => ev.stopPropagation());
+    panel.addEventListener('keydown', (ev) => ev.stopPropagation());
+    send.addEventListener('click', () => {
+        setArrowIcon(item, tickPath, '#D8B200');
+        send.disabled = true;
+        send.classList.add('sent');
+        send.textContent = 'Request sent';
+        setTimeout(() => {
+            collapseInlineRequest(item, false);
+            openTipPanel();
+        }, 700);
+    });
+    panel.append(textarea, send);
+    panel.style.maxHeight = '0px';
+    requestAnimationFrame(() => {
+        panel.classList.add('visible');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+    });
+    return panel;
 }
 
-function closeRequestModal() {
-    requestModal?.classList.remove('open');
-    if (requestSheet) requestSheet.style.transform = '';
+function collapseInlineRequest(item, revertIcon = true) {
+    if (!item) return;
+    const panel = item.querySelector('.song-request-panel');
+    if (panel) {
+        panel.classList.add('closing');
+        panel.style.maxHeight = '0px';
+        setTimeout(() => {
+            panel.remove();
+        }, 260);
+    }
+    if (revertIcon) setArrowIcon(item, defaultArrowPath, '#FFCC66');
+    item.classList.remove('expanded');
+    if (openRequestItem === item) openRequestItem = null;
+}
+
+function toggleInlineRequest(item) {
+    const title = item.querySelector('.song-title')?.textContent.trim();
+    const artist = item.querySelector('.song-artist')?.textContent.trim();
+    if (openRequestItem && openRequestItem !== item) {
+        collapseInlineRequest(openRequestItem);
+    }
+    const alreadyOpen = item.classList.contains('expanded');
+    if (alreadyOpen) {
+        collapseInlineRequest(item);
+        return;
+    }
+    const panel = buildInlineRequest(item, title, artist);
+    item.append(panel);
+    setArrowIcon(item, closeXPath, '#D8B200');
+    item.classList.add('expanded');
+    openRequestItem = item;
+}
+
+const defaultArrowPath = 'M21.426 11.095L4.42601 3.09504C4.25482 3.0145 4.0643 2.98416 3.87657 3.00756C3.68883 3.03095 3.51158 3.10713 3.36541 3.22723C3.21923 3.34733 3.11012 3.50644 3.05076 3.68607C2.99139 3.8657 2.98419 4.05849 3.03001 4.24205L4.24201 9.09104L12 12L4.24201 14.909L3.03001 19.758C2.98333 19.9417 2.98992 20.1349 3.04902 20.315C3.10811 20.4951 3.21726 20.6546 3.3637 20.7749C3.51014 20.8953 3.68782 20.9714 3.87594 20.9944C4.06406 21.0175 4.25486 20.9865 4.42601 20.905L21.426 12.905C21.5978 12.8243 21.7431 12.6963 21.8448 12.536C21.9466 12.3758 22.0006 12.1899 22.0006 12C22.0006 11.8102 21.9466 11.6243 21.8448 11.464C21.7431 11.3038 21.5978 11.1758 21.426 11.095Z';
+const closeXPath = 'M6 6 L18 18 M18 6 L6 18';
+const tickPath = 'M6 13 L10 17 L18 7';
+
+function setArrowIcon(item, pathData, fillColor) {
+    const arrowIcon = item.querySelector('.song-arrow svg path');
+    if (arrowIcon) {
+        arrowIcon.setAttribute('d', pathData);
+        if (pathData === defaultArrowPath) {
+            arrowIcon.setAttribute('fill', fillColor || '#FFCC66');
+            arrowIcon.removeAttribute('stroke');
+            arrowIcon.removeAttribute('stroke-width');
+            arrowIcon.removeAttribute('stroke-linecap');
+            arrowIcon.removeAttribute('stroke-linejoin');
+        } else {
+            arrowIcon.setAttribute('fill', 'none');
+            arrowIcon.setAttribute('stroke', fillColor || '#D8B200');
+            arrowIcon.setAttribute('stroke-width', '2.6');
+            arrowIcon.setAttribute('stroke-linecap', 'round');
+            arrowIcon.setAttribute('stroke-linejoin', 'round');
+        }
+    }
 }
 
 songArrows.forEach(arrow => {
     const item = arrow.closest('.song-item');
-    const title = item?.querySelector('.song-title')?.textContent.trim();
-    const artist = item?.querySelector('.song-artist')?.textContent.trim();
     arrow.addEventListener('click', (e) => {
         e.stopPropagation();
-        openRequestModal(title, artist);
+        if (item) toggleInlineRequest(item);
     });
     arrow.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             e.stopPropagation();
-            openRequestModal(title, artist);
+            if (item) toggleInlineRequest(item);
         }
     });
 });
 
 songItems.forEach(item => {
-    const title = item.querySelector('.song-title')?.textContent.trim();
-    const artist = item.querySelector('.song-artist')?.textContent.trim();
     item.setAttribute('tabindex', '0');
     item.addEventListener('click', (e) => {
         const target = e.target;
-        if (target instanceof Element && target.closest('.song-arrow')) return;
-        openRequestModal(title, artist);
+        if (target instanceof Element && (target.closest('.song-arrow') || target.closest('.song-request-panel'))) return;
+        toggleInlineRequest(item);
     });
     item.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            openRequestModal(title, artist);
+            toggleInlineRequest(item);
         }
     });
 });
-
-requestCancel?.addEventListener('click', closeRequestModal);
-requestModal?.addEventListener('click', (e) => {
-    if (e.target === requestModal) closeRequestModal();
-});
-requestSend?.addEventListener('click', () => {
-    // Placeholder: integrate your request submission here if needed.
-    closeRequestModal();
-    openTipPanel();
-});
-
-window.addEventListener('DOMContentLoaded', () => {
-    songArrows.forEach(arrow => {
-        const item = arrow.closest('.song-item');
-        const title = item?.querySelector('.song-title')?.textContent.trim();
-        const artist = item?.querySelector('.song-artist')?.textContent.trim();
-        arrow.addEventListener('click', () => openRequestModal(title, artist));
-    });
-});
-
-// Drag-to-close for request sheet
-if (requestGrabber && requestSheet && requestModal) {
-    let dragging = false;
-    let startY = 0;
-    let currentY = 0;
-    const threshold = 100;
-
-    const onStart = (clientY) => {
-        dragging = true;
-        startY = clientY;
-        currentY = 0;
-        requestSheet.classList.add('dragging');
-    };
-
-    const onMove = (clientY) => {
-        if (!dragging) return;
-        currentY = Math.max(0, clientY - startY);
-        requestSheet.style.transform = `translateY(${currentY}px)`;
-    };
-
-    const onEnd = () => {
-        if (!dragging) return;
-        dragging = false;
-        requestSheet.classList.remove('dragging');
-        if (currentY > threshold) {
-            closeRequestModal();
-        } else {
-            requestSheet.style.transform = 'translateY(0)';
-        }
-    };
-
-    requestGrabber.addEventListener('mousedown', (e) => onStart(e.clientY));
-    requestGrabber.addEventListener('touchstart', (e) => onStart(e.touches[0].clientY), { passive: true });
-    window.addEventListener('mousemove', (e) => onMove(e.clientY));
-    window.addEventListener('touchmove', (e) => onMove(e.touches[0].clientY), { passive: true });
-    window.addEventListener('mouseup', onEnd);
-    window.addEventListener('touchend', onEnd);
-}
 
 // Stripe Elements checkout flow removed in favor of sliding to open Stripe link.
+const songsTitle = document.querySelector('.songs-title');

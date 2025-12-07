@@ -6,34 +6,24 @@
     <title>Setlink</title>
     <link rel="stylesheet" href="styling/style.css">
 </head>
-<body class="landing">
-    <header class="nav">
-        <div class="nav-left">
-            <div class="brand">Setlink</div>
-            <nav>
-                <a href="#">Features</a>
-                <a href="#">Pricing</a>
-                <a href="#">Docs</a>
-            </nav>
-        </div>
-        <div class="nav-actions">
-            <a class="nav-pill ghost" href="#">Contact</a>
-            <a class="nav-pill" href="#">Dashboard</a>
+<body class="landing green-landing">
+    <header class="pill-nav">
+        <div class="pill-nav-inner">
+            <div class="pill-logo" aria-hidden="true">*</div>
+            <button class="pill-tab active" type="button">Admin</button>
+            <button class="pill-tab dark" type="button">Log out</button>
+            <button class="pill-burger" type="button" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
 
-    <main class="hero">
-        <div class="hero-bg"></div>
+    <main class="hero hero-linktree">
         <div class="hero-inner">
-            <p class="badge">Live • Artists and audiences in sync</p>
-            <h1>Share one link for tips, requests, and setlists.</h1>
-            <p class="hero-sub">Setlink gives musicians a live-ready page for requests, tipping, and showcasing your songs—all in one place.</p>
-            <div class="hero-ctas">
-                <button class="cta primary">Start Deploying</button>
-                <button class="cta secondary">Get a Demo</button>
-            </div>
+            <h1>Bring your audience closer with one interactive link.</h1>
+            <p class="hero-sub highlight">Invite song requests. Receive tips and reviews. Elevate every performance.</p>
             <div class="tester hero-tester">
-                <label for="user-select">Quick test: jump to a user</label>
+                <label for="user-select">Jump to a user</label>
                 <select id="user-select">
                     <option value="">Select a user…</option>
                     <option value="oisin/mysetlink.html">Oisin</option>
@@ -45,10 +35,6 @@
         </div>
     </main>
 
-    <section class="footer-note">
-        <p>Build your Setlink, share it with fans, and stay in the moment.</p>
-    </section>
-
     <script>
         const userSelect = document.getElementById('user-select');
         userSelect?.addEventListener('change', (e) => {
@@ -59,5 +45,6 @@
             }
         });
     </script>
+    <footer class="site-footer">Powered by Setlink 2025.</footer>
 </body>
 </html>

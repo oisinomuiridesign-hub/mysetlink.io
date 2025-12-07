@@ -14,7 +14,6 @@
             <p class="tagline">Indie singer-songwriter bringing mellow vibes.</p>
         <section class="songs" aria-label="Song search and list">
             <form class="search" role="search">
-                <label class="search-label" for="song-search">Make a request</label>
                 <div class="search-bar">
                     <svg aria-hidden="true" viewBox="0 0 24 24">
                         <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 5L20.49 19l-5-5zM10 14a4 4 0 110-8 4 4 0 010 8z" fill="black"></path>
@@ -35,16 +34,23 @@
                 </button>
             </div>
             <div class="tip-panel" aria-label="Tip panel">
-                <h3>Support the artist</h3>
-                <p class="tip-copy">Slide to send a tip via Stripe.</p>
+                <h3>Support Your Musician</h3>
                 <div class="slider" role="button" aria-label="Slide right to confirm tip" tabindex="0">
                     <div class="slider-track">
                         <div class="slider-thumb" data-thumb>
                             <span class="slider-arrow">&#xBB;</span>
                         </div>
-                        <span class="slider-hint">Slide to tip</span>
+                        <span class="slider-hint">Slide to Tip via Stripe</span>
                     </div>
                 </div>
+            </div>
+            <div class="review-panel" aria-label="Review panel">
+                <a class="review-link" href="https://g.page/r/CZ7tJcVOO9vbEAE/review" target="_blank" rel="noopener noreferrer">
+                    <svg class="cta-icon" viewBox="0 0 24 24" aria-hidden="true" width="16" height="16">
+                        <path fill="#ffffff" opacity="0.85" d="M21.35 11.1h-9.18v2.92h5.3c-.23 1.48-1.6 4.33-5.3 4.33-3.18 0-5.77-2.63-5.77-5.87s2.58-5.87 5.77-5.87c1.81 0 3.03.77 3.73 1.43l2.55-2.46C17.21 3.85 15.08 2.8 12.17 2.8 6.98 2.8 3 6.78 3 12s3.98 9.2 9.17 9.2c5.3 0 8.83-3.73 8.83-8.99 0-.6-.07-1.05-.16-1.51Z"/>
+                    </svg>
+                    Review on Google
+                </a>
             </div>
             <h2 class="songs-title">Popular Songs</h2>
             <div class="song-list" role="list" aria-live="polite">
@@ -119,14 +125,15 @@
         </section>
     </main>
     <div class="modal-overlay request-overlay" data-request-modal>
-        <div class="request-sheet">
-            <div class="request-grabber" aria-hidden="true"></div>
+        <div class="modal">
             <div class="modal-header">
                 <h2>Send this request</h2>
             </div>
-            <div class="request-summary">
+            <div class="modal-song">
                 <p class="request-song"><span class="request-song-title">Song</span></p>
-                <p class="request-artist"><span class="request-song-artist">Artist</span></p>
+                <div class="song-subline">
+                    <span class="request-song-artist">Artist</span>
+                </div>
             </div>
             <div class="request-field">
                 <label for="request-name">Your name</label>
