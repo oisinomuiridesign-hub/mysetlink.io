@@ -8,7 +8,7 @@
 body {
     margin: 0;
     font-family: "Manrope", "Helvetica Neue", Arial, sans-serif;
-    background: #0d0b0a;
+    background: #000000;
     color: #e9eaed;
 }
 
@@ -63,9 +63,13 @@ h1 {
 /* CTAs */
 .cta-list {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 24px;
     justify-content: center;
+    margin-top: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
 }
 
 .cta {
@@ -76,7 +80,7 @@ h1 {
     width: 160px;
     height: 48px;
     padding: 0 16px;
-    border-radius: 0 0 12px 12px;
+    border-radius: 12px;
     border: 1px solid #2B2926;
     background: #2B2926;
     color: #ffffff;
@@ -84,6 +88,7 @@ h1 {
     text-decoration: none;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
     transition: transform 120ms ease, box-shadow 120ms ease;
+    flex: 0 0 auto;
 }
 
 .cta svg {
@@ -96,6 +101,12 @@ h1 {
     background: #2B2926;
     color: #ffffff;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.cta.dim {
+    background: #201d1b;
+    border-color: #201d1b;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
 }
 
 .cta:hover,
@@ -113,12 +124,17 @@ h1 {
     stroke: #d8b200 !important;
 }
 
+.cta.open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
 /* Tip / review panels */
 .review-panel,
 .tip-panel {
     width: 100%;
     max-width: calc(160px * 2 + 24px);
-    margin: 0 auto 12px;
+    margin: -1px auto 12px;
     background: #2B2926;
     border: 1px solid #2B2926;
     border-radius: 14px;
@@ -131,18 +147,22 @@ h1 {
 .review-panel.open {
     max-height: 160px;
     padding: 12px 16px 16px;
-    margin-top: 8px;
+    margin-top: 0;
+    background: #2B2926;
+    border-radius: 14px;
 }
 
 .tip-panel {
-    margin-bottom: 18px;
+    margin-bottom: 12px;
     transition: max-height 360ms ease, padding 360ms ease, margin-top 360ms ease;
 }
 
 .tip-panel.open {
     max-height: 520px;
     padding: 16px;
-    margin-top: 8px;
+    margin-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
 .tip-panel h3,
@@ -637,7 +657,7 @@ h1 {
 
 /* Landing page (index) */
 .green-landing {
-    background: #1A1817;
+    background: #000000;
     color: #ffffff;
 }
 
@@ -731,22 +751,31 @@ h1 {
 }
 
 .hero-linktree {
-    padding: 12px 18px 40px;
+    padding: 500px 18px 120px;
     text-align: center;
 }
 
+.hero-logo {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    color: #d8b200;
+    margin: 4px 0 80px;
+}
+
 .hero-linktree h1 {
-    margin: 12px auto 12px;
-    max-width: 640px;
-    font-size: 32px;
-    line-height: 1.2;
+    margin: 36px auto 32px;
+    max-width: 400px;
+    font-size: 44px;
+    line-height: 48px;
+    font-weight: 600;
     color: #ffffff;
     letter-spacing: -0.4px;
 }
 
 .hero-linktree .hero-sub {
-    margin: 0 auto 24px;
-    max-width: 580px;
+    margin: 0 auto 48px;
+    max-width: 320px;
     font-size: 18px;
     line-height: 1.5;
     color: rgba(255, 255, 255, 0.82);
@@ -756,9 +785,14 @@ h1 {
     color: rgba(255, 255, 255, 0.82);
 }
 
+.hero-sub .gold-highlight {
+    color: #ffffff;
+    font-weight: 700;
+}
+
 .hero-tester {
     max-width: 300px;
-    margin: 10px auto 8px;
+    margin: 30px auto 24px;
     color: #d6d1c9;
 }
 
@@ -777,6 +811,20 @@ h1 {
     color: #ffffff;
 }
 
+.hero-visual {
+    margin: 32px auto 0;
+    max-width: 720px;
+    border-radius: 0;
+    overflow: visible;
+    box-shadow: none;
+}
+
+.hero-visual .hero-photo-landing {
+    width: 100%;
+    min-height: 300px;
+    background: url("../home/Setlink_Hero_Scan QR Code.png") center/contain no-repeat transparent;
+}
+
 .footer-note {
     text-align: center;
     padding: 24px;
@@ -789,4 +837,15 @@ h1 {
     padding: 12px;
     color: rgba(255, 255, 255, 0.5);
     font-size: 12px;
+}
+.hero-primary {
+    background: #3396FF;
+    border: none;
+    color: #ffffff;
+    border-radius: 999px;
+    padding: 16px 32px;
+    font-weight: 800;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
 }
