@@ -52,9 +52,14 @@ function toggleTipPanel() {
     if (willOpen) {
         tipPanel.classList.add('open');
         reviewPanel?.classList.remove('open');
-        tipPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        reviewTriggers.forEach(btn => btn.classList.add('dim'));
+        tipTriggers.forEach(btn => btn.classList.remove('dim'));
+        tipTriggers.forEach(btn => btn.classList.add('open'));
+        reviewTriggers.forEach(btn => btn.classList.remove('open'));
     } else {
         tipPanel.classList.remove('open');
+        reviewTriggers.forEach(btn => btn.classList.remove('dim'));
+        tipTriggers.forEach(btn => btn.classList.remove('open'));
     }
 }
 
@@ -62,6 +67,10 @@ function openTipPanel() {
     if (!tipPanel) return;
     tipPanel.classList.add('open');
     reviewPanel?.classList.remove('open');
+    reviewTriggers.forEach(btn => btn.classList.add('dim'));
+    tipTriggers.forEach(btn => btn.classList.remove('dim'));
+    tipTriggers.forEach(btn => btn.classList.add('open'));
+    reviewTriggers.forEach(btn => btn.classList.remove('open'));
 }
 
 function toggleReviewPanel() {
@@ -70,9 +79,14 @@ function toggleReviewPanel() {
     if (willOpen) {
         reviewPanel.classList.add('open');
         tipPanel?.classList.remove('open');
-        reviewPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        tipTriggers.forEach(btn => btn.classList.add('dim'));
+        reviewTriggers.forEach(btn => btn.classList.remove('dim'));
+        reviewTriggers.forEach(btn => btn.classList.add('open'));
+        tipTriggers.forEach(btn => btn.classList.remove('open'));
     } else {
         reviewPanel.classList.remove('open');
+        tipTriggers.forEach(btn => btn.classList.remove('dim'));
+        reviewTriggers.forEach(btn => btn.classList.remove('open'));
     }
 }
 
