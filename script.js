@@ -184,7 +184,7 @@ function buildInlineRequest(item, title, artist) {
     panel.className = 'song-request-panel';
     const textarea = document.createElement('textarea');
     textarea.className = 'request-message';
-    textarea.placeholder = 'Add a message to your request.';
+    textarea.placeholder = `Requesting ${title || 'this song'}\nAdd a message to your request?`;
     textarea.rows = 3;
     textarea.maxLength = 50;
     const send = document.createElement('button');
@@ -318,3 +318,32 @@ if (scanButton) {
         window.location.href = pick;
     });
 }
+
+// Nav user dropdown
+if (userToggle && userDropdown) {
+    userToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isHidden = userDropdown.hasAttribute('hidden');
+        if (isHidden) {
+            userDropdown.removeAttribute('hidden');
+        } else {
+            userDropdown.setAttribute('hidden', 'hidden');
+        }
+    });
+
+    userDropdown.querySelectorAll('.user-item').forEach(btn => {
+        btn.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            const url = btn.getAttribute('data-url');
+            if (url) window.location.href = url;
+        });
+    });
+
+    document.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target instanceof Element && (userDropdown.contains(target) || userToggle.contains(target))) return;
+        userDropdown.setAttribute('hidden', 'hidden');
+    });
+}
+const userDropdown = document.getElementById('user-dropdown');
+const userToggle = document.getElementById('user-search-toggle');

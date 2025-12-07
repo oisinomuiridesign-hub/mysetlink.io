@@ -7,9 +7,37 @@
     <link rel="stylesheet" href="styling/style.css">
 </head>
 <body class="landing green-landing">
+    <header class="top-nav">
+        <a class="hero-logo small" href="/">Setlink</a>
+        <div class="nav-actions">
+            <button id="user-search-toggle" class="nav-icon" aria-label="Search users">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15.5 14h-.79l-.28-.27A6.5 6.5 0 1016 9.5a6.47 6.47 0 00-1.5 4.23l.27.27h.79l5 5L20.5 19l-5-5zm-6 0A4.5 4.5 0 1114 9.5 4.5 4.5 0 019.5 14z" fill="#ffffff"/>
+                </svg>
+            </button>
+            <div id="user-dropdown" class="user-dropdown" hidden>
+                <button class="user-item" data-url="oisin/" type="button">
+                    <img src="oisin/400_New black Oisin Murray - The Old Hairdresser's - Fennell Records - 23_12_22 - Sean Bruce Monteith-06-min 1.png" alt="Oisin avatar">
+                    <span>Oisin</span>
+                </button>
+                <button class="user-item" data-url="emma/mysetlink.html" type="button">
+                    <img src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?auto=format&fit=crop&w=60&q=60" alt="Emma avatar">
+                    <span>Emma</span>
+                </button>
+                <button class="user-item" data-url="liam/mysetlink.html" type="button">
+                    <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=60&q=60" alt="Liam avatar">
+                    <span>Liam</span>
+                </button>
+                <button class="user-item" data-url="sofia/mysetlink.html" type="button">
+                    <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=60&q=60" alt="Sofia avatar">
+                    <span>Sofia</span>
+                </button>
+            </div>
+        </div>
+    </header>
     <main class="hero hero-linktree">
         <div class="hero-inner">
-            <div class="hero-logo">Setlink</div>
+            <a class="hero-logo" href="/">Setlink</a>
             <h1>One link to engage your audience</h1>
             <p class="hero-sub highlight">Designed to let fans <span class="gold-highlight">request songs</span>, <span class="gold-highlight">tip</span>, and leave <span class="gold-highlight">reviews</span> without interrupting the show.</p>
             <button id="scan-random" class="cta hero-primary" type="button">Scan</button>
