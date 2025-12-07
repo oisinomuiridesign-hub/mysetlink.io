@@ -24,6 +24,7 @@ const requestTitle = document.querySelector('.request-song-title');
 const requestCancel = document.querySelector('.request-cancel');
 const requestSend = document.querySelector('.request-send');
 const songArrows = Array.from(document.querySelectorAll('.song-arrow'));
+const scanButton = document.getElementById('scan-random');
 
 function filterSongs() {
     const query = (searchInput?.value || '').trim().toLowerCase();
@@ -308,3 +309,12 @@ songItems.forEach(item => {
 
 // Stripe Elements checkout flow removed in favor of sliding to open Stripe link.
 const songsTitle = document.querySelector('.songs-title');
+
+// Random user "Scan" CTA on landing
+if (scanButton) {
+    const userUrls = ['oisin/mysetlink.html', 'emma/mysetlink.html', 'liam/mysetlink.html', 'sofia/mysetlink.html'];
+    scanButton.addEventListener('click', () => {
+        const pick = userUrls[Math.floor(Math.random() * userUrls.length)];
+        window.location.href = pick;
+    });
+}

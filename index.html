@@ -7,30 +7,14 @@
     <link rel="stylesheet" href="styling/style.css">
 </head>
 <body class="landing green-landing">
-    <header class="pill-nav">
-        <div class="pill-nav-inner">
-            <div class="pill-logo" aria-hidden="true">*</div>
-            <button class="pill-tab active" type="button">Admin</button>
-            <button class="pill-tab dark" type="button">Log out</button>
-            <button class="pill-burger" type="button" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </header>
-
     <main class="hero hero-linktree">
         <div class="hero-inner">
-            <h1>Bring your audience closer with one interactive link.</h1>
-            <p class="hero-sub highlight">Invite song requests. Receive tips and reviews. Elevate every performance.</p>
-            <div class="tester hero-tester">
-                <label for="user-select">Jump to a user</label>
-                <select id="user-select">
-                    <option value="">Select a user…</option>
-                    <option value="oisin/mysetlink.html">Oisin</option>
-                    <option value="emma/mysetlink.html">Emma</option>
-                    <option value="liam/mysetlink.html">Liam</option>
-                    <option value="sofia/mysetlink.html">Sofia</option>
-                </select>
+            <div class="hero-logo">Setlink</div>
+            <h1>One link to engage your audience</h1>
+            <p class="hero-sub highlight">Designed to let fans <span class="gold-highlight">request songs</span>, <span class="gold-highlight">tip</span>, and leave <span class="gold-highlight">reviews</span> without interrupting the show.</p>
+            <button id="scan-random" class="cta hero-primary" type="button">Scan</button>
+            <div class="hero-visual">
+                <div class="hero-photo-landing" role="img" aria-label="Setlink hero image"></div>
             </div>
         </div>
     </main>
@@ -44,6 +28,15 @@
                 window.location.href = value;
             }
         });
+
+        const scanButton = document.getElementById('scan-random');
+        if (scanButton) {
+            const userUrls = ['oisin/mysetlink.html', 'emma/mysetlink.html', 'liam/mysetlink.html', 'sofia/mysetlink.html'];
+            scanButton.addEventListener('click', () => {
+                const pick = userUrls[Math.floor(Math.random() * userUrls.length)];
+                window.location.href = pick;
+            });
+        }
     </script>
     <footer class="site-footer">Powered by Setlink 2025.</footer>
 </body>
