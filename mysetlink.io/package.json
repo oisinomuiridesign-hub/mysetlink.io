@@ -1,0 +1,10 @@
+{
+  "name": "front-end-dev",
+  "version": "1.0.0",
+  "private": true,
+  "main": "api/create-payment-intent.js",
+  "type": "commonjs",
+  "dependencies": {
+    "stripe": "^14.23.0"
+  }
+}
